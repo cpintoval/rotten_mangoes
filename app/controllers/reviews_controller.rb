@@ -18,7 +18,7 @@ class ReviewsController < ApplicationController
     end
   end
 
-  protected
+  protectedº
 
   def load_movie
     @movie = Movie.find(params[:movie_id])
