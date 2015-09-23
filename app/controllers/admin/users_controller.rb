@@ -5,19 +5,22 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-
-    if @user.save
-      session[:user_id] = @user.id # auto log in
-      redirect_to movies_path, notice: "Welcome aboard, #{@user.firstname}!"
+    if current_user && is_admin?(current_user)
+      @user = User.new(user_params)
+      if @user.save
+        # session[:user_id] = @user.id # auto log in
+        redirect_to admin_users_path, notice: "#{@user.firstname} #{@user.lastname} was created successfully!"
+      else
+        render :new
+      end
     else
-      render :new
+      redirect_to movies_path, alert: "Oops! You can't go here!"
     end
   end
 
   def index
-    @user = User.find(session[:user_id])
-    if is_admin?(@user)
+    @user = current_user
+    if @user && is_admin?(@user)
       @users = User.all.page(params[:page]).per(10)
       render :index
     else
@@ -25,7 +28,21 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to admin_users_path, notice: "Destroy successful"
+  end
+
   protected
+
+  def current_user
+    User.find(session[:user_id])
+  end
 
   def is_admin?(user)
     user.role == 'admin'
