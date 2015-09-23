@@ -1,14 +1,17 @@
 <h1>Admin User Management Page</h1>
+<%= link_to "Create an user", new_admin_user_path %>
 <hr>
 
 <h2>Rotten Mangoes Users List</h2>
 
 <%= paginate @users %>
 
+<ul>
 <% @users.each do |user| %>
-  <h3><%= user.firstname + user.lastname %></h3>
-  <h4><%= user.email %></h4>
-  <h5>Reviews: <%= user.reviews.count %></h5>
+  <li>
+    <p><%= "#{user.firstname} #{user.lastname}" %> (<%= user.email %>) - Role: <%= user.role  %> (<%= link_to "edit", edit_admin_user_path(user) %>, <%= link_to "delete", admin_user_path(user), method: :delete, confirm: "You sure?" %>)</p>
+  </li>
 <% end %>
+<ul>
 
 <hr>
