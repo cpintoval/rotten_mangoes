@@ -11,4 +11,6 @@ RottenMangoes::Application.routes.draw do
     resources :users
   end
 
+  get '/search', to: 'movies#search', as: 'search_movie'
+
 end
