@@ -46,3 +46,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Pagination gem
 gem 'kaminari'
+
+group :development do
+  gem 'web-console', '~> 2.0'
+end

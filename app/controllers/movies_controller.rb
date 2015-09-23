@@ -1,6 +1,28 @@
 class MoviesController < ApplicationController
   def index
+
     @movies = Movie.all
+
+    if params[:title] != nil && params[:title] != ""
+      @movies = Movie.where(title: params[:title])
+    end
+
+    if params[:director] != nil && params[:director] != ""
+      @movies = Movie.where(director: params[:director])
+    end
+
+    if params[:duration] != nil && params[:duration] != ""
+      
+      if params[:duration] == "Under 90 minutes"
+        @movies = Movie.where("runtime_in_minutes < 90")
+      elsif params[:duration] == "Between 90 and 120 minutes"
+        @movies = Movie.where(runtime_in_minutes: 90..120)
+      else
+        @movies = Movie.where("runtime_in_minutes > 120")
+      end 
+
+    end
+
   end
 
   def show
@@ -39,6 +61,10 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.destroy
     redirect_to movies_path
+  end
+
+  def search
+    render :search
   end
 
   protected
