@@ -18,6 +18,7 @@ class Admin::UsersController < ApplicationController
   def index
     @user = User.find(session[:user_id])
     if is_admin?(@user)
+      @users = User.all.page(params[:page]).per(10)
       render :index
     else
       redirect_to movies_path, alert: "Oops! You can't go here!"

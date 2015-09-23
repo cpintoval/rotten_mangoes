@@ -1,1 +1,14 @@
 <h1>Admin User Management Page</h1>
+<hr>
+
+<h2>Rotten Mangoes Users List</h2>
+
+<%= paginate @users %>
+
+<% @users.each do |user| %>
+  <h3><%= user.firstname + user.lastname %></h3>
+  <h4><%= user.email %></h4>
+  <h5>Reviews: <%= user.reviews.count %></h5>
+<% end %>
+
+<hr>
