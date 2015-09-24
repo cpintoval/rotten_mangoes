@@ -15,6 +15,7 @@
     <p><%= review.text %></p>
     <p><%= review.rating_out_of_ten %>/10</p>
     <small>- <%= review.user.full_name %></small><br/>
+    <%= link_to "View Profile", user_path(review.user) %>
   <% end %>
   <p><%= link_to "Write a review!", new_movie_review_path(@movie) %></p>
 <% else %>
