@@ -8,7 +8,6 @@ class Admin::UsersController < ApplicationController
     if current_user && is_admin?(current_user)
       @user = User.new(user_params)
       if @user.save
-        # session[:user_id] = @user.id # auto log in
         redirect_to admin_users_path, notice: "#{@user.firstname} #{@user.lastname} was created successfully!"
       else
         render :new
@@ -32,13 +31,22 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def update
+    if current_user && is_admin?(current_user)
+      @user = User.find(params[:id])
+      if @user.update_attributes(user_params)
+        redirect_to admin_users_path, notice: "#{@user.firstname} #{@user.lastname} was updated successfully!"
+      else
+        render :edit
+      end
+    else
+      redirect_to movies_path, alert: "Oops! You can't go here!"
+    end
+  end
+
   def destroy
     @user = User.find(params[:id])
-    # respond_to do |format|
-    UserMailer.farewell_email(@user).deliver_later
-      # format.html { redirect_to(@user, notice: 'User was successfully deleted.') }
-      # format.html { render action: 'new' }
-    # end
+    UserMailer.farewell_email(@user).deliver_now
     @user.destroy
     redirect_to admin_users_path, notice: "Destroy successful"
   end
