@@ -120,12 +120,12 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
-  coffee-rails (~> 4.0.0)
+  coffee-rails
   jbuilder (~> 1.2)
   jquery-rails
   kaminari
-  rails (= 4.0.0)
-  sass-rails (~> 4.0.0)
+  rails
+  sass-rails
   sdoc
   sqlite3
   turbolinks
