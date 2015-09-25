@@ -51,6 +51,10 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_users_path, notice: "Destroy successful"
   end
 
+  def switch
+
+  end
+
   protected
 
   def current_user
@@ -63,6 +67,18 @@ class Admin::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :firstname, :lastname, :password, :password_confirmation, :role)
+  end
+
+  def switch_to_user(user_id)
+    session[:admin_id] = session[:user_id]
+    session[:user_id] = user_id
+  end
+
+  def switch_to_admin
+    if session[:admin_id]
+      session[:user_id] = session[:admin_id]
+      session[:admin_id].delete
+    end
   end
 
 end

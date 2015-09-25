@@ -5,6 +5,9 @@
       <% if current_user.role == 'admin' %>
         <%= link_to "Admin User Management Page", admin_users_path %>
       <% end %>
+      <% if session[:admin_id] %>
+        <%= link_to "Switch to Admin", sessions_path, method: :patch %>
+      <% end %>
     <% else %>
       <%= link_to "Log In", new_sessions_path %> | <%= link_to "Sign Up", new_user_path %>
     <% end %>
